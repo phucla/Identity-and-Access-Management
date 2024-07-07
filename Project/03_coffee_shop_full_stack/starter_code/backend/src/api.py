@@ -122,14 +122,14 @@ def update_drink(payload, id):
         title = data.get('title', None)
         recipe = data.get('recipe', None)
 
-        drink = Drink.query.filter(Drink.id == id).one_or_none()
+        drink = Drink.query.filter_by(id=id).one_or_none()
         if drink is None:
             abort(404)
 
         if title:
             drink.title = title
         if recipe:
-            drink.recipe = recipe
+            drink.recipe = json.dumps(recipe)
         drink.update()
 
         return jsonify({
